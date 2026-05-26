@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Huiren Woo
+ * Copyright 2026 Huiren Woo
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
  *
@@ -8,16 +8,16 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-// router-link.tsx
-import {useRouterHook} from "./router-hook.ts";
+// router-link-singleton.tsx
 import {type AnchorHTMLAttributes, memo, type MouseEventHandler, useCallback} from "react";
+import {useRouterHookSingleton} from "./router-hook-singleton.ts";
 
 interface RouterLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
     to: string;
 }
 
-function RouterLink({to, children, ...props}: RouterLinkProps) {
-    const {navigate} = useRouterHook();
+function RouterLinkSingleton({to, children, ...props}: RouterLinkProps) {
+    const {navigate} = useRouterHookSingleton();
     const handleClick: MouseEventHandler<HTMLAnchorElement> = useCallback((e) => {
         e.preventDefault();
         navigate(to);
@@ -30,4 +30,4 @@ function RouterLink({to, children, ...props}: RouterLinkProps) {
     );
 }
 
-export default memo(RouterLink);
+export default memo(RouterLinkSingleton);

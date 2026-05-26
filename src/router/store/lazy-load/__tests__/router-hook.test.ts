@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Huiren Woo
+ * Copyright 2026 Huiren Woo
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
  *
@@ -10,7 +10,7 @@
 
 import {afterEach, beforeEach, describe, expect, test, vi} from "vitest";
 import {act, renderHook} from "@testing-library/react";
-import {useRouterHook} from "./router-hook.ts";
+import {useRouterHook} from "../router-hook.ts";
 
 describe('useRouterHook', () => {
     beforeEach(() => {
@@ -21,12 +21,12 @@ describe('useRouterHook', () => {
         vi.useRealTimers();
     });
 
-    test('returns the current path', () => {
+    test('should return the current path', () => {
         const {result} = renderHook(() => useRouterHook());
         expect(result.current.data.path).toBe('/');
     });
 
-    test('updates when navigate() is called', () => {
+    test('should update when navigate() is called', () => {
         const {result} = renderHook(() => useRouterHook());
         act(() => {
             result.current.navigate('/about');
@@ -35,7 +35,7 @@ describe('useRouterHook', () => {
         expect(result.current.data.path).toBe('/about');
     });
 
-    test('updates all mounted hook instances', () => {
+    test('should update all mounted hook instances', () => {
         const hookA = renderHook(() => useRouterHook());
         const hookB = renderHook(() => useRouterHook());
 
@@ -47,7 +47,7 @@ describe('useRouterHook', () => {
         expect(hookB.result.current.data.path).toBe('/about');
     });
 
-    test('unsubscribes cleanly upon unmount', () => {
+    test('should unsubscribe cleanly upon unmount', () => {
         const hookA = renderHook(() => useRouterHook());
         const hookB = renderHook(() => useRouterHook());
 

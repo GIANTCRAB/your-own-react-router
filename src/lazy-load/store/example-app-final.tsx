@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Huiren Woo
+ * Copyright 2026 Huiren Woo
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
  *
@@ -8,16 +8,15 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-// example-app-basic.tsx
 import {lazy, memo} from "react";
-import {useRouterHook} from "./router-hook.ts";
-import RouterRootBasic from "./router-root-basic.tsx";
+import RouterRoot from "../../router/store/lazy-load/router-root.tsx";
+import {useRouterHook} from "../../router/store/lazy-load/router-hook.ts";
 
 const routes = {
-    '/': lazy(() => delayForDemo(import('./App.tsx'))),
-    '/register': lazy(() => delayForDemo(import('./register.tsx'))),
-    '/login': lazy(() => delayForDemo(import('./login.tsx'))),
-    '/todos': lazy(() => delayForDemo(import('./todo.tsx'))),
+    '/': lazy(() => delayForDemo(import('../../App.tsx'))),
+    '/register': lazy(() => delayForDemo(import('../../register.tsx'))),
+    '/login': lazy(() => delayForDemo(import('../../login.tsx'))),
+    '/todos': lazy(() => delayForDemo(import('../../todo.tsx'))),
 };
 
 function delayForDemo(promise: any) {
@@ -26,10 +25,11 @@ function delayForDemo(promise: any) {
     }).then(() => promise);
 }
 
-export function ExampleAppBasic() {
+// useTransition
+export function ExampleAppFinal() {
     return <>
         <ExampleAppNavMemoized/>
-        <RouterRootBasic routes={routes}/>
+        <RouterRoot routes={routes}/>
     </>;
 }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Huiren Woo
+ * Copyright 2026 Huiren Woo
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
  *
@@ -12,7 +12,7 @@
 import {routerStore, type RouterStoreDataType, type RouterStoreNotifyCallbackType} from "./router-store.ts";
 import {useCallback, useSyncExternalStore} from "react";
 
-type RouterHookType = {
+export type RouterHookType = {
     data: Readonly<RouterStoreDataType>,
     navigate: (path: string) => void,
 };
@@ -32,9 +32,7 @@ export function useRouterHook(): RouterHookType {
 
     const navigate = useCallback((to: string) => {
         // Intentional setTimeout to make page navigation seem slower
-        setTimeout(() => {
-            routerStore.updateData({path: to});
-        }, 1000);
+        routerStore.updateData({path: to});
     }, []);
 
     return {data, navigate};

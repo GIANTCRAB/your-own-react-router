@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Huiren Woo
+ * Copyright 2026 Huiren Woo
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
  *
@@ -15,12 +15,12 @@ import {
     memo,
     type ReactElement,
     useCallback,
-    useLayoutEffect,
+    useEffect,
     useState,
     useTransition
 } from "react";
+import {LOADING_INFO_COMPONENT_ID} from "../../../__tests__/test-router-root-constants.ts";
 import {useRouterHook} from "./router-hook.ts";
-import {LOADING_INFO_COMPONENT_ID} from "./__tests__/test-router-root-constants.ts";
 
 type RouterRootRouteType = {
     [route: string]: LazyExoticComponent<ComponentType>;
@@ -43,23 +43,29 @@ function RouterRoot({routes}: RouterRootPropsType) {
     }, [routes]);
 
     const popStateListener = useCallback(() => {
-        if (window.location.pathname != data.path) {
-            navigate(window.location.pathname);
-        }
-    }, [data.path, navigate]);
+        console.log("popStateListener");
+        console.log('popstate event triggered, navigating to:', window.location.pathname);
+        navigate(window.location.pathname);
+    }, [navigate]);
 
-    useLayoutEffect(() => {
+    const subscribeListener = useCallback(() => {
+        startTransition(() => {
+            console.log("startTransition 1");
+            console.log(data.path)
+            setReadyElement(makeElement(data.path));
+        });
+    }, [data.path, makeElement]);
+
+    useEffect(() => {
         window.addEventListener('popstate', popStateListener);
         return () => {
             window.removeEventListener('popstate', popStateListener);
         }
     }, [popStateListener]);
 
-    useLayoutEffect(() => {
-        startTransition(() => {
-            setReadyElement(makeElement(data.path));
-        });
-    }, [data.path, makeElement]);
+    useEffect(() => {
+        subscribeListener();
+    }, [subscribeListener]);
 
     return (
         <div>

@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Huiren Woo
+ * Copyright 2026 Huiren Woo
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
  *
@@ -10,7 +10,7 @@
 
 import {describe, expect, test, vi} from "vitest";
 import {act, render, renderHook, screen} from "@testing-library/react";
-import RouterRoot from "./router-root.tsx";
+import RouterRoot from "../router-root.tsx";
 import {lazy} from "react";
 import {
     CHILD_PAGE_CONTENT_DATA,
@@ -18,12 +18,12 @@ import {
     CHILD_SECOND_PAGE_CONTENT_DATA,
     CHILD_SECOND_PAGE_CONTENT_ID,
     LOADING_INFO_COMPONENT_ID
-} from "./__tests__/test-router-root-constants.ts";
-import {useRouterHook} from "./router-hook.ts";
+} from "../../../../__tests__/test-router-root-constants.ts";
+import {useRouterHook} from "../router-hook.ts";
 
 const testRoutes = {
-    '/': lazy(() => import('./__tests__/test-router-root-child-page.tsx')),
-    '/other-page': lazy(() => import('./__tests__/test-router-root-child-second-page.tsx'))
+    '/': lazy(() => import('../../../../__tests__/test-router-root-child-page.tsx')),
+    '/other-page': lazy(() => import('../../../../__tests__/test-router-root-child-second-page.tsx'))
 };
 
 describe('router-root', () => {

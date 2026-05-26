@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Huiren Woo
+ * Copyright 2026 Huiren Woo
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
  *
@@ -10,8 +10,8 @@
 
 import {afterEach, beforeEach, describe, expect, type MockInstance, test, vi} from "vitest";
 import {act, fireEvent, render, renderHook, type RenderResult} from "@testing-library/react";
-import RouterRoot from "./router-root.tsx";
-import {useRouterHook} from "./router-hook.ts";
+import RouterRoot from "../router-root.tsx";
+import {useRouterHook} from "../router-hook.ts";
 
 describe('router-root with event spying', () => {
     let addSpy: MockInstance;

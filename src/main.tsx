@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Huiren Woo
+ * Copyright 2026 Huiren Woo
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
  *
@@ -10,7 +10,7 @@
 
 import {StrictMode} from 'react'
 import {createRoot} from 'react-dom/client'
-import {ExampleAppFinal} from "./example-app-final.tsx";
+import {ExampleAppFinal} from "./lazy-load/store/example-app-final.tsx";
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>

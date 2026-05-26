@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Huiren Woo
+ * Copyright 2026 Huiren Woo
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
  *
@@ -8,21 +8,36 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-// router-root-eager-load.tsx
-import {memo, type ReactElement, useCallback, useLayoutEffect, useState} from "react";
-import {useRouterHook} from "./router-hook.ts";
+// router-root-basic.tsx
+import {
+    type ComponentType,
+    type LazyExoticComponent,
+    memo,
+    Suspense,
+    useCallback,
+    useLayoutEffect,
+    useMemo
+} from "react";
+import {useRouterHook} from "../store/lazy-load/router-hook.ts";
 
-type RouterRootEagerLoadRouteType = {
-    [route: string]: ReactElement;
+type RouterRootRouteType = {
+    [route: string]: LazyExoticComponent<ComponentType>;
 };
 
-type RouterRootEagerLoadPropsType = {
-    routes: RouterRootEagerLoadRouteType,
+type RouterRootPropsType = {
+    routes: RouterRootRouteType,
 };
 
-function RouterRootEagerLoad({routes}: RouterRootEagerLoadPropsType) {
+function RouterRootBasic({routes}: RouterRootPropsType) {
     const {data, navigate} = useRouterHook();
-    const [readyElement, setReadyElement] = useState<ReactElement | null>(null);
+    const makeElement = useCallback((path: string) => {
+        const LazyElement = routes[path];
+        if (LazyElement != null) {
+            return <LazyElement/>
+        }
+        return null;
+    }, [routes]);
+    const readyElement = useMemo(() => makeElement(data.path), [data.path, makeElement]);
 
     const popStateListener = useCallback(() => {
         if (window.location.pathname != data.path) {
@@ -37,15 +52,13 @@ function RouterRootEagerLoad({routes}: RouterRootEagerLoadPropsType) {
         }
     }, [popStateListener]);
 
-    useLayoutEffect(() => {
-        setReadyElement(routes[data.path]);
-    }, [data.path, routes]);
-
     return (
         <div>
-            {readyElement}
+            <Suspense fallback={<div>Loading...</div>}>
+                {readyElement}
+            </Suspense>
         </div>
     );
 }
 
-export default memo(RouterRootEagerLoad);
+export default memo(RouterRootBasic);

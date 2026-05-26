@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Huiren Woo
+ * Copyright 2026 Huiren Woo
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
  *
@@ -9,12 +9,12 @@
  */
 
 // example-app-eager-load.tsx
-import {useRouterHook} from "./router-hook.ts";
-import App from "./App.tsx";
-import Register from "./register.tsx";
-import Login from "./login.tsx";
-import Todo from "./todo.tsx";
-import RouterRootEagerLoad from "./router-root-eager-load.tsx";
+import {useRouterHook} from "../../router/store/lazy-load/router-hook.ts";
+import App from "../../App.tsx";
+import Register from "../../register.tsx";
+import Login from "../../login.tsx";
+import Todo from "../../todo.tsx";
+import RouterRootEagerLoad from "../../router/store/eager-load/router-root-eager-load.tsx";
 
 const routes = {
     '/': <App/>,
